@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { LoginDto } from './dto/login.dto';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { LoginRequestDto } from './dto/login.request.dto';
+import { LoginResponseDto } from './dto/login.response.dto';
 import { LoginService } from './login.service';
 
 @ApiTags('auth')
@@ -9,8 +10,9 @@ export class LoginController {
 
     constructor(private readonly loginService: LoginService) {}
 
+    @ApiCreatedResponse({type: LoginResponseDto})
     @Post()
-    login(@Body() request: LoginDto) {
+    async login(@Body() request: LoginRequestDto): Promise<LoginResponseDto> {
         return this.loginService.login(request.email, request.password);
     }
 

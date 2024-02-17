@@ -1,5 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiCreatedResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserSignUpDto } from './dto/user.dto';
+import { UserResponseDto } from './dto/user.response.dto';
 import { UserService } from './user.service';
 
 @ApiTags('users')
@@ -7,8 +9,15 @@ import { UserService } from './user.service';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Get('test')
-    getUser() {
-      this.userService.getUser("spacekay");
+    @ApiResponse({type: UserResponseDto})
+    @Get(':email')
+    async getUser(@Param('email') email: string) : Promise<UserResponseDto> {
+      return await this.userService.getUser(email);
+    }
+
+    @ApiCreatedResponse({type: UserResponseDto})
+    @Post()
+    async signUpUser(@Body() body: UserSignUpDto) : Promise<UserResponseDto> {
+      return await this.userService.signUpUser(body);
     }
 }

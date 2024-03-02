@@ -1,7 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { AlarmResponseDto } from "src/alarm/dto/alarm.response.dto";
+import { Dday } from "../schema/dday.schema";
 
 export class DdayDetailResponseDto {
+
+    constructor(dday: Dday) {
+        this.ddayId = dday.id.toString('hex');
+        this.ddayDate = dday.ddayDate;
+        this.ddayName = dday.ddayName;
+        this.isBirthday = dday.isBirthday;
+        this.isUserBirthday = dday.isUserBirthday;
+        this.birthdayName = dday.birthdayName;
+        this.alarms = dday.alarms != null ? dday.alarms.map(alarm => new AlarmResponseDto(alarm)) : [];
+    }
 
     @ApiProperty({
         example: 'Dday schema object id',

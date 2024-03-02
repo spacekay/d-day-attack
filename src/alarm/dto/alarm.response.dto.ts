@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Alarm } from "../schema/alarm.schema";
 
 export class AlarmResponseDto {
 
-    @ApiProperty({
-        example: 'Alarm schema object id',
-        description: 'Alarm 아이디',
-    })
-    alarmId: string;
+    constructor(alarm: Alarm) {
+        this.alarmDateTime = alarm.alarmDateTime;
+        this.isEmailAlarm = alarm.isEmailAlarm;
+    }
 
     @ApiProperty({
         example: '2024-01-01 hh:mm:ss',

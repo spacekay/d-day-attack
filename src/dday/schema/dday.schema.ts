@@ -1,42 +1,48 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import mongoose, { Document, Types } from 'mongoose';
-import { Dday } from 'src/dday/schema/dday.schema';
+import { Alarm } from 'src/alarm/schema/alarm.schema';
+import { User } from 'src/user/schema/user.schema';
 
-export type UserDocument = User & Document;
+export type DdayDocument = Dday & Document;
 
 export @Schema({ timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" } })
-class User{
+class Dday{
 
   @Prop({
     required: true,
     unique: true
-  }) 
-  @IsEmail()
-  @IsNotEmpty()
-  userMail: string; 
-
-  @Prop({
-    required: true
-  }) 
-  @IsNotEmpty()
-  userName: string; 
-
+  })
+  id: Types.ObjectId;
+  
   @Prop({
     required: true
   })
+  user: User;
+
+  @Prop({ default: new Date(),
+     type: mongoose.Schema.Types.Date,
+     required: true
+   })
+  ddayDate: Date;
+
+  @Prop({
+    required: true
+  })
   @IsNotEmpty()
-  password: string;
+  ddayName: string;
 
   @Prop({
-    default: true
+    default: false
   })
-  isUsingEmailAlarm: boolean;
+  isBirthday: boolean;
 
   @Prop({
-    default: 0
+    default: false
   })
-  maxDailyEmailUsage: number;
+  isUserBirthday: boolean;
+  
+  birthdayName: string;
 
   @Prop({
     default: true
@@ -49,8 +55,8 @@ class User{
   @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
   updatedAt: Date;
 
-  ddays: Dday[]
+  alarms: Alarm[];
  
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const DdaySchema = SchemaFactory.createForClass(Dday);

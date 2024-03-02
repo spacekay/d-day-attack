@@ -2,12 +2,16 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { InjectModel } from '@nestjs/mongoose';
 import * as argon2 from 'argon2';
 import { Model } from 'mongoose';
-import { UserSignUpDto } from './dto/user.dto';
+import { DdayService } from 'src/dday/dday.service';
+import { UserPutRequestDto } from './dto/user.put.request.dto';
 import { UserResponseDto } from './dto/user.response.dto';
+import { UserSignUpDto } from './dto/user.signup.dto';
 import { User, UserDocument } from './schema/user.schema';
+import { DdaySimpleResponseDto } from 'src/dday/dto/dday.simple.response.dto';
 
 @Injectable()
 export class UserService {
+
 constructor(
     @InjectModel(User.name) 
     private userModel: Model<UserDocument>) {}
@@ -19,7 +23,7 @@ constructor(
             throw new NotFoundException('User not found')
         }
 
-        return this.makeUserResponseDto(user);
+        return new UserResponseDto(user);
     }
 
     async signUpUser(body: UserSignUpDto): Promise<any> {
@@ -36,15 +40,20 @@ constructor(
             userMail: email, userName: name, password: hashedPassword
         })
 
-        return this.makeUserResponseDto(user);
+        return new UserResponseDto(user);
     }
 
-    makeUserResponseDto(user: User) : UserResponseDto {
-        return {
-            email: user.userMail, name: user.userName,
-            isUsingEmailAlarm: user.isUsingEmailAlarm,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt };
+    async putUser(body: UserPutRequestDto): Promise<any> {
+        const user = await this.userModel.findOne({userMail: body.email});
+
+        if (!user) {
+            throw new NotFoundException('User not found')
+        }
+
+        user.userName = body.name;
+        await user.save();
+
+        return new UserResponseDto(user);
     }
 
     async hashPassword(password:string) : Promise<string> {

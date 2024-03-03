@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { DdaySimpleResponseDto } from "src/dday/dto/dday.simple.response.dto";
 import { User } from "../schema/user.schema";
+import { DatetimeUtil } from "src/utils/datetime.util";
 
 export class UserResponseDto {
 
@@ -8,8 +9,8 @@ export class UserResponseDto {
         this.email = user.userMail;
         this.name = user.userName;
         this.isUsingEmailAlarm = user.isUsingEmailAlarm;
-        this.createdAt = user.createdAt;
-        this.updatedAt = user.updatedAt;
+        this.createdAt = DatetimeUtil.getDateTimeString(user.createdAt);
+        this.updatedAt = DatetimeUtil.getDateTimeString(user.updatedAt);
         this.ddays = user.ddays != null ? user.ddays.map(dday => new DdaySimpleResponseDto(dday)) : [];
     }
 
@@ -34,12 +35,12 @@ export class UserResponseDto {
     @ApiProperty({
         description: '회원 가입 일시',
     })
-    createdAt: Date;
+    createdAt: String;
 
     @ApiProperty({
         description: '회원 정보 변경 일시',
     })
-    updatedAt: Date;
+    updatedAt: String;
 
     @ApiProperty({
         description: '기념일 목록',

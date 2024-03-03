@@ -1,12 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { AlarmResponseDto } from "src/alarm/dto/alarm.response.dto";
+import { DatetimeUtil } from "src/utils/datetime.util";
 import { Dday } from "../schema/dday.schema";
 
 export class DdayDetailResponseDto {
 
     constructor(dday: Dday) {
         this.ddayId = dday.id.toString('hex');
-        this.ddayDate = dday.ddayDate;
+        this.ddayDate = DatetimeUtil.getDateString(dday.ddayDate);
         this.ddayName = dday.ddayName;
         this.isBirthday = dday.isBirthday;
         this.isUserBirthday = dday.isUserBirthday;
@@ -24,7 +25,7 @@ export class DdayDetailResponseDto {
         example: '2024-01-01',
         description: '기념일자',
     })
-    ddayDate: Date;
+    ddayDate: String;
 
     @ApiProperty({
         example: '첫째 동생 생일',

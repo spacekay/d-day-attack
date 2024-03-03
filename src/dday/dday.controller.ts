@@ -12,7 +12,7 @@ export class DdayController {
     constructor(private readonly ddayService: DdayService) {}
 
     @ApiResponse({type: DdaySimpleResponseDto})
-    @Get(':userMmail')
+    @Get(':userEmail')
     async getDdayList(@Param('userEmail') email: string) : Promise<DdaySimpleResponseDto> {
       return await this.ddayService.getDdayList(email);
     }

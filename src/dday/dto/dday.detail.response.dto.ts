@@ -6,17 +6,16 @@ import { Dday } from "../schema/dday.schema";
 export class DdayDetailResponseDto {
 
     constructor(dday: Dday) {
-        this.ddayId = dday.id.toString('hex');
+        this.ddayId = dday.ddayId;
         this.ddayDate = DatetimeUtil.getDateString(dday.ddayDate);
         this.ddayName = dday.ddayName;
         this.isBirthday = dday.isBirthday;
         this.isUserBirthday = dday.isUserBirthday;
         this.birthdayName = dday.birthdayName;
-        this.alarms = dday.alarms != null ? dday.alarms.map(alarm => new AlarmResponseDto(alarm)) : [];
     }
 
     @ApiProperty({
-        example: 'Dday schema object id',
+        example: 'Dday schema id',
         description: 'Dday 아이디',
     })
     ddayId: string;
@@ -50,10 +49,5 @@ export class DdayDetailResponseDto {
         description: '(본인의 생일이 아닌 경우) 생일인 대상 이름',
     })
     birthdayName: string;
-    
-    @ApiProperty({
-        description: '알람 예약 목록',
-    })
-    alarms: AlarmResponseDto[];
     
 }

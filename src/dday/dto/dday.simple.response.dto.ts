@@ -5,7 +5,7 @@ import { Dday } from "../schema/dday.schema";
 export class DdaySimpleResponseDto {
 
     constructor(dday: Dday) {
-        this.ddayId = dday.id.toString('hex');
+        this.ddayId = dday.ddayId;
         this.ddayDate = DatetimeUtil.getDateString(dday.ddayDate);
         this.ddayName = dday.ddayName;
         this.isBirthday = dday.isBirthday;
@@ -13,7 +13,7 @@ export class DdaySimpleResponseDto {
     }
 
     @ApiProperty({
-        example: 'Dday schema object id',
+        example: 'Dday schema id',
         description: 'Dday 아이디',
     })
     ddayId: string;

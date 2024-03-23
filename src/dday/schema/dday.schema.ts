@@ -1,22 +1,22 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsNotEmpty } from 'class-validator';
-import mongoose, { Document, Types } from 'mongoose';
-import { Alarm } from 'src/alarm/schema/alarm.schema';
+import mongoose, { Document } from 'mongoose';
 import { User } from 'src/user/schema/user.schema';
 
 export type DdayDocument = Dday & Document;
 
-export @Schema({ timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" } })
+export @Schema({ timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" }})
 class Dday{
-
-  @Prop({
-    required: true,
-    unique: true
-  })
-  id: Types.ObjectId;
   
   @Prop({
     required: true
+  })
+  @IsNotEmpty()
+  ddayId: string;
+  
+  @Prop({
+    required: true,
+    ref: 'User'
   })
   user: User;
 
@@ -24,6 +24,7 @@ class Dday{
      type: mongoose.Schema.Types.Date,
      required: true
    })
+   @IsNotEmpty()
   ddayDate: Date;
 
   @Prop({
@@ -42,6 +43,7 @@ class Dday{
   })
   isUserBirthday: boolean;
   
+  @Prop()
   birthdayName: string;
 
   @Prop({
@@ -54,8 +56,6 @@ class Dday{
 
   @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
   updatedAt: Date;
-
-  alarms: Alarm[];
  
 }
 

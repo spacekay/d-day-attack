@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import { ApiCreatedResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiCreatedResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DdayService } from './dday.service';
 import { DdayDetailResponseDto } from './dto/dday.detail.response.dto';
 import { DdayPostRequestDto } from './dto/dday.post.request.dto';
@@ -7,13 +8,15 @@ import { DdayPutRequestDto } from './dto/dday.put.request.dto';
 import { DdaySimpleResponseDto } from './dto/dday.simple.response.dto';
 
 @ApiTags('ddays')
+@UseGuards(AuthGuard('jwt'))
+@ApiBearerAuth('access-token')
 @Controller('dday')
 export class DdayController {
     constructor(private readonly ddayService: DdayService) {}
 
     @ApiResponse({type: DdaySimpleResponseDto})
-    @Get(':userEmail')
-    async getDdayList(@Param('userEmail') email: string) : Promise<DdaySimpleResponseDto> {
+    @Get()
+    async getDdayList(@Query('userEmail') email: string) : Promise<DdaySimpleResponseDto> {
       return await this.ddayService.getDdayList(email);
     }
 

@@ -11,12 +11,14 @@ class Alarm{
   @Prop({
     required: true
   })
-  dday: Dday;
+  @IsNotEmpty()
+  ddayId: string;
 
   @Prop({ default: new Date(),
     type: mongoose.Schema.Types.Date,
     required: true
   })
+  @IsNotEmpty()
   alarmDateTime: Date;
 
   @Prop({
@@ -24,7 +26,16 @@ class Alarm{
   })
   isEmailAlarm: boolean;
 
+  @Prop()
+  alarmEmail: string;
+
+  @Prop()
   emailErrorDetail: string;
+
+  @Prop({
+    default: false
+  })
+  isUsed: boolean;
 
   @Prop({
     default: true

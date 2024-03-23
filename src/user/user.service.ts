@@ -17,10 +17,10 @@ constructor(
     private userModel: Model<UserDocument>) {}
 
     async getUser(email: string): Promise<any> {
-        const user = await this.userModel.findOne({userMail: email});
+        const user = await this.userModel.findOne({userMail: email, isActive: true});
 
         if (!user) {
-            throw new NotFoundException('User not found')
+            throw new NotFoundException('User not found');
         }
 
         return new UserResponseDto(user);
@@ -38,13 +38,13 @@ constructor(
 
         const user = await this.userModel.create({
             userMail: email, userName: name, password: hashedPassword
-        })
+        });
 
         return new UserResponseDto(user);
     }
 
     async putUser(body: UserPutRequestDto): Promise<any> {
-        const user = await this.userModel.findOne({userMail: body.email});
+        const user = await this.userModel.findOne({userMail: body.email, isActive: true});
 
         if (!user) {
             throw new NotFoundException('User not found')

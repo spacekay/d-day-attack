@@ -22,6 +22,12 @@ async function bootstrap() {
   .setTitle('D Day Attack')
   .setDescription('D Day Attack API description')
   .setVersion('1.0')
+  .addBearerAuth({
+    type: 'http',
+    scheme: 'bearer',
+    name: 'JWT',
+    in: 'header'
+  }, 'access-token')
   .addTag('auth')
   .addTag('users')
   .addTag('mails')

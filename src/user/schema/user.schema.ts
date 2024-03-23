@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import mongoose, { Document, Types } from 'mongoose';
-import { Dday } from 'src/dday/schema/dday.schema';
+import mongoose, { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
@@ -9,8 +8,7 @@ export @Schema({ timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" } 
 class User{
 
   @Prop({
-    required: true,
-    unique: true
+    required: true
   }) 
   @IsEmail()
   @IsNotEmpty()
@@ -48,8 +46,6 @@ class User{
 
   @Prop({ default: new Date(), type: mongoose.Schema.Types.Date })
   updatedAt: Date;
-
-  ddays: Dday[]
  
 }
 

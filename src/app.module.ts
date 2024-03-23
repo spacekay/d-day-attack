@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AlarmModule } from './alarm/alarm.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DdayModule } from './dday/dday.module';
 import { LoginModule } from './login/login.module';
 import { MailModule } from './mail/mail.module';
 import { UserModule } from './user/user.module';
-import { AlarmModule } from './alarm/alarm.module';
-import { DdayModule } from './dday/dday.module';
 
 @Module({
   controllers: [AppController],

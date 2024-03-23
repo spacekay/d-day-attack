@@ -11,7 +11,6 @@ export class UserResponseDto {
         this.isUsingEmailAlarm = user.isUsingEmailAlarm;
         this.createdAt = DatetimeUtil.getDateTimeString(user.createdAt);
         this.updatedAt = DatetimeUtil.getDateTimeString(user.updatedAt);
-        this.ddays = user.ddays != null ? user.ddays.map(dday => new DdaySimpleResponseDto(dday)) : [];
     }
 
     @ApiProperty({
@@ -41,10 +40,5 @@ export class UserResponseDto {
         description: '회원 정보 변경 일시',
     })
     updatedAt: String;
-
-    @ApiProperty({
-        description: '기념일 목록',
-    })
-    ddays: DdaySimpleResponseDto[]; 
     
 }

@@ -15,7 +15,7 @@ export class LoginService {
 
     async login(email: string, password: string) : Promise<any> {
 
-        const user = await this.userModel.findOne({userMail: email})
+        const user = await this.userModel.findOne({userMail: email, isActive: true})
         if (!user) {
             throw new UnauthorizedException('Login error (not a vaild user');
         } else {

@@ -1,4 +1,4 @@
-# D Day Attack
+# D Day Attack (API)
 ## Don't forget to celebrate your special days.
 D Day Attack은 여러분이 사랑하는 사람, 동물, 그룹 등의 기념일을 잊지 않고 기억할 수 있게 하는 어플리케이션입니다.
 
@@ -13,9 +13,10 @@ D Day Attack은 여러분이 사랑하는 사람, 동물, 그룹 등의 기념�
 ---
 ## Tech Stack
 * TypeScript
-    * Nest.js
-    * TBU (MSA 구현은 어렵고 full-stack 진행 예정)
+    * B/E: NestJs
+    * F/E: Next.js
 * MongoDB
-    * Mongoose
-* TBU
-    * Kafka 등..
+    * Mongoose (MongoDB Atlas)
+* Deployment
+    * B/E: TBU
+    * F/E: Vercel (TBD)

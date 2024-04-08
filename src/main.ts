@@ -16,7 +16,13 @@ async function bootstrap() {
         config.get<string>('SWAGGER_ADMIN_PASSWORD')
       }
     })
-  )
+  );
+
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+    exposedHeaders: ['Authorization'], // * 사용할 헤더 추가.
+  });
 
   const swaggerConfig = new DocumentBuilder()
   .setTitle('D Day Attack')

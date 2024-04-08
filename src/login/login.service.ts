@@ -14,10 +14,10 @@ export class LoginService {
         private userModel: Model<UserDocument>){}
 
     async login(email: string, password: string) : Promise<any> {
-
+        console.log(email, password);
         const user = await this.userModel.findOne({userMail: email, isActive: true})
         if (!user) {
-            throw new UnauthorizedException('Login error (not a vaild user');
+            throw new UnauthorizedException('Login error (not a vaild user)');
         } else {
             const isPasswordValid = await this.validatePassword(password, user.password);
             console.log(isPasswordValid);
